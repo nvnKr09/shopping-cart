@@ -1,13 +1,16 @@
+// Homepage.js
 import React, { useEffect, useState } from "react";
 import "../Styles/Homepage.css";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/actions/cartActions";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
+  const [addedToCart, setAddedToCart] = useState([]);
   const dispatch = useDispatch();
+  const cartData = useSelector((state) => state.cart);
 
   useEffect(() => {
     axios
@@ -22,7 +25,7 @@ function Homepage() {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
-    console.log("this is product", product);
+    setAddedToCart((prev) => [...prev, product.id]);
   };
 
   return (
@@ -34,17 +37,21 @@ function Homepage() {
           {products &&
             products.length > 0 &&
             products.map((product) => {
-              const {id, price, title, description, thumbnail} = product;
+              const { id, price, title, description, thumbnail } = product;
+              const isAdded = addedToCart.includes(id);
               return (
                 <div key={id} className="item">
-                  <div className = "img-div"><img src={thumbnail} alt={description} /></div>
+                  <div className="img-div">
+                    <img src={thumbnail} alt={description} />
+                  </div>
                   <span className="title">{title}</span>
                   <span className="price">Price : ${price}</span>
                   <button
                     type="button"
                     onClick={() => handleAddToCart(product)}
+                    disabled={isAdded}
                   >
-                    Add to Cart
+                    {isAdded ? "Added to Cart" : "Add to Cart"}
                   </button>
                 </div>
               );
