@@ -1,0 +1,36 @@
+.navbar{
+    position: sticky;
+    top: 0;
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: #000;
+    color: white;
+}
+.logo{
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+.navbar a:hover{
+    color: aqua;
+}
+@media screen and (max-width: 426px) {
+    .navbar{
+        flex-direction: column;
+    }
+}
